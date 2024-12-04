@@ -7,6 +7,10 @@ import (
 	"github.com/hatlonely/hello-golang/pkg/refx"
 )
 
+func init() {
+	refx.Register("store", "LoadableStore", NewLoadableStore)
+}
+
 type LoadableStoreOptions struct {
 	Loader refx.Options
 	Store  refx.Options
