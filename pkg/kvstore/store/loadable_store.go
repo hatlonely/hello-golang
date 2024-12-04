@@ -2,6 +2,7 @@ package store
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/hatlonely/hello-golang/pkg/kvstore"
 	"github.com/hatlonely/hello-golang/pkg/refx"
@@ -47,6 +48,7 @@ func NewLoadableStore(options *LoadableStoreOptions) (*LoadableStore, error) {
 
 		for stream.HasNext() {
 			key, val, err := stream.Next()
+			fmt.Println(key, val)
 			if err != nil {
 				return err
 			}

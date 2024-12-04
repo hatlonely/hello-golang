@@ -47,7 +47,7 @@ func (l *FileLoader) OnChange(listener kvstore.Listener) error {
 	if err != nil {
 		return errors.Wrap(err, "os.Open failed")
 	}
-	defer file.Close()
+	// defer file.Close()
 
 	l.streamChan <- &FileLoaderKVStream{
 		scanner:   bufio.NewScanner(file),
