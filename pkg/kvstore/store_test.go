@@ -47,17 +47,34 @@ func TestStore(t *testing.T) {
 
 func TestLoadableStore(t *testing.T) {
 	config := `{
-		"Type": "store.Freecache",
-		"Options": {
-			"Size": 1000000,
-			"KeyMarshaler": {
-				"Type": "marshaler.JSONMarshaler"
-			},
-			"ValMarshaler": {
-				"Type": "marshaler.JSONMarshaler"
+	"Type": "store.LoadableStore",
+	"Options": {
+		"Store": {
+			"Type": "store.Freecache",
+			"Options": {
+				"Size": 1000000,
+				"KeyMarshaler": {
+					"Type": "marshaler.JSONMarshaler"
+				},
+				"ValMarshaler": {
+					"Type": "marshaler.JSONMarshaler"
+				}
+			}
+		},
+		"ReadonlyStore": {
+			"Type": "store.Freecache",
+			"Options": {
+				"Size": 1000000,
+				"KeyMarshaler": {
+					"Type": "marshaler.JSONMarshaler"
+				},
+				"ValMarshaler": {
+					"Type": "marshaler.JSONMarshaler"
+				}
 			}
 		}
-	}`
+	}
+}`
 
 	options := &refx.Options{}
 	err := json.Unmarshal([]byte(config), options)
