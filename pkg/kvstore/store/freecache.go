@@ -25,7 +25,7 @@ type Freecache struct {
 	valMarshaler kvstore.Marshaler
 }
 
-func NewFreecache(options FreecacheOptions) (*Freecache, error) {
+func NewFreecache(options *FreecacheOptions) (*Freecache, error) {
 	keyMarshaler, err := kvstore.NewMarshaler(options.KeyMarshaler)
 	if err != nil {
 		return nil, errors.Wrap(err, "NewMarshaler failed")

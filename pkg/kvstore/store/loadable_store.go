@@ -21,7 +21,7 @@ type LoadableStore struct {
 	readonlyStore kvstore.ReadonlyStore
 }
 
-func NewLoadableStore(options LoadableStoreOptions) (*LoadableStore, error) {
+func NewLoadableStore(options *LoadableStoreOptions) (*LoadableStore, error) {
 	store, err := kvstore.NewStore(&options.Store)
 	if err != nil {
 		return nil, err
