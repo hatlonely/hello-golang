@@ -1,6 +1,8 @@
 package store
 
 import (
+	"context"
+
 	"github.com/hatlonely/hello-golang/pkg/kvstore"
 	"github.com/hatlonely/hello-golang/pkg/refx"
 )
@@ -11,8 +13,9 @@ type LoadableStoreOptions struct {
 }
 
 type LoadableStore struct {
-	loader kvstore.Loader
-	store  kvstore.Store
+	loader       kvstore.Loader
+	store        kvstore.Store
+	storeOptions refx.Options
 }
 
 func NewLoadableStore(options *LoadableStoreOptions) (*LoadableStore, error) {
@@ -26,8 +29,38 @@ func NewLoadableStore(options *LoadableStoreOptions) (*LoadableStore, error) {
 		return nil, err
 	}
 
-	return &LoadableStore{
-		loader: loader,
-		store:  store,
-	}, nil
+	ls := &LoadableStore{
+		loader:       loader,
+		store:        store,
+		storeOptions: options.Store,
+	}
+
+	loader.OnChange(func(stream kvstore.KVStream) error {
+		store, err := kvstore.NewStore(&options.Store)
+		if err != nil {
+			return err
+		}
+
+		for stream.HasNext() {
+			key, val, err := stream.Next()
+			if err != nil {
+				return err
+			}
+			store.Set(context.Background(), key, val)
+		}
+
+		ls.store = store
+
+		return nil
+	})
+
+	return ls, nil
+}
+
+func (s *LoadableStore) Set(ctx context.Context, key any, value any) error {
+	return s.store.Set(ctx, key, value)
+}
+
+func (s *LoadableStore) Get(ctx context.Context, key any) (any, error) {
+	return s.store.Get(ctx, key)
 }
