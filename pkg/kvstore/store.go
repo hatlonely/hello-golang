@@ -1,13 +1,15 @@
 package kvstore
 
 import (
+	"context"
+
 	"github.com/hatlonely/hello-golang/pkg/refx"
 )
 
 type Store interface {
-	Set(key any, value any) error
-	Get(key any) (any, error)
-	// Del(key any) error
+	Set(ctx context.Context, key any, value any) error
+	Get(ctx context.Context, key any) (any, error)
+	// Del(ctx context.Context, key any) error
 }
 
 func NewStore(options *refx.Options) (Store, error) {

@@ -1,6 +1,7 @@
 package kvstore_test
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"testing"
@@ -37,8 +38,8 @@ func TestStore(t *testing.T) {
 		panic(err)
 	}
 
-	store.Set("key", "value")
-	val, err := store.Get("key")
+	store.Set(context.Background(), "key", "value")
+	val, err := store.Get(context.Background(), "key")
 	if err != nil {
 		panic(err)
 	}

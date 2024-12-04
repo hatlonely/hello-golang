@@ -1,6 +1,8 @@
 package store
 
 import (
+	"context"
+
 	"github.com/coocood/freecache"
 	"github.com/hatlonely/hello-golang/pkg/kvstore"
 	"github.com/hatlonely/hello-golang/pkg/refx"
@@ -41,7 +43,7 @@ func NewFreecache(options FreecacheOptions) (*Freecache, error) {
 	}, nil
 }
 
-func (f *Freecache) Set(key any, value any) error {
+func (f *Freecache) Set(ctx context.Context, key any, value any) error {
 	keyBytes, err := f.keyMarshaler.Marshal(key)
 	if err != nil {
 		return errors.Wrap(err, "Marshal failed")
@@ -56,7 +58,7 @@ func (f *Freecache) Set(key any, value any) error {
 	return nil
 }
 
-func (f *Freecache) Get(key any) (any, error) {
+func (f *Freecache) Get(ctx context.Context, key any) (any, error) {
 	keyBytes, err := f.keyMarshaler.Marshal(key)
 	if err != nil {
 		return nil, errors.Wrapf(err, "Marshal failed. key: [%v]", key)
