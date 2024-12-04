@@ -111,7 +111,7 @@ func NewConstructor(constructor interface{}) (*Constructor, error) {
 }
 
 // 通用的配置结构，Options 可以是任意类型，一般来自于配置文件，也可以由代码构造
-type TypeOptions struct {
+type Options struct {
 	Namespace string          // 命名空间，一般以 <package>.<interface> 命名
 	Type      string          // 类型，一般使用类名或者类名的缩写
 	Options   json.RawMessage // 传给构造函数的参数，也可以是一个可以自然转换成参数的 interface{}（一般来自于配置文件）
@@ -145,7 +145,7 @@ func Register(namespace string, typ string, constructor interface{}) {
 //	if !ok {
 //	  return nil, errors.New("type assertion failed")
 //	}
-func New(options *TypeOptions) (interface{}, error) {
+func New(options *Options) (interface{}, error) {
 	key := options.Type
 	if options.Namespace != "" {
 		key = fmt.Sprintf("%s.%s", options.Namespace, options.Type)
@@ -181,7 +181,7 @@ func New(options *TypeOptions) (interface{}, error) {
 //	if err != nil {
 //	  return nil, errors.WithMessage(err, "refx.New failed")
 //	}
-func NewType(implement reflect.Type, options *TypeOptions) (interface{}, error) {
+func NewType(implement reflect.Type, options *Options) (interface{}, error) {
 	v, err := New(options)
 	if err != nil {
 		return nil, errors.WithMessage(err, "refx.New failed")

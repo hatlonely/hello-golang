@@ -28,7 +28,7 @@ func TestStore(t *testing.T) {
 	}
 }`
 
-	options := &refx.TypeOptions{}
+	options := &refx.Options{}
 	err := json.Unmarshal([]byte(config), options)
 	if err != nil {
 		panic(err)

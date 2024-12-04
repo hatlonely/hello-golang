@@ -7,9 +7,10 @@ import (
 type Store interface {
 	Set(key any, value any) error
 	Get(key any) (any, error)
+	// Del(key any) error
 }
 
-func NewStore(options *refx.TypeOptions) (Store, error) {
+func NewStore(options *refx.Options) (Store, error) {
 	kvstore, err := refx.New(options)
 	if err != nil {
 		return nil, err

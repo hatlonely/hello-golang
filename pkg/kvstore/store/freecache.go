@@ -13,8 +13,8 @@ func init() {
 
 type FreecacheOptions struct {
 	Size         int
-	KeyMarshaler refx.TypeOptions
-	ValMarshaler refx.TypeOptions
+	KeyMarshaler refx.Options
+	ValMarshaler refx.Options
 }
 
 type Freecache struct {

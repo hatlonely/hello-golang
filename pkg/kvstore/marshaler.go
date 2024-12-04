@@ -7,7 +7,7 @@ type Marshaler interface {
 	Unmarshal(data []byte, v any) error
 }
 
-func NewMarshaler(options refx.TypeOptions) (Marshaler, error) {
+func NewMarshaler(options refx.Options) (Marshaler, error) {
 	marshaler, err := refx.New(&options)
 	if err != nil {
 		return nil, err

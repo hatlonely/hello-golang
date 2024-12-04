@@ -149,14 +149,14 @@ func TestNew(t *testing.T) {
 		Register("", "C4", nil)
 
 		{
-			v, err := New(&TypeOptions{
+			v, err := New(&Options{
 				Type: "DefaultC1",
 			})
 			So(err, ShouldBeNil)
 			So(v.(B).Fun(), ShouldEqual, 1)
 		}
 		{
-			v, err := New(&TypeOptions{
+			v, err := New(&Options{
 				Type:    "C2",
 				Options: json.RawMessage(`{"Val":2}`),
 			})
@@ -164,7 +164,7 @@ func TestNew(t *testing.T) {
 			So(v.(B).Fun(), ShouldEqual, 2)
 		}
 		{
-			v, err := New(&TypeOptions{
+			v, err := New(&Options{
 				Type: "C3",
 			})
 			So(err, ShouldBeNil)
@@ -172,14 +172,14 @@ func TestNew(t *testing.T) {
 		}
 
 		{
-			v, err := NewType(reflect.TypeOf((*B)(nil)).Elem(), &TypeOptions{
+			v, err := NewType(reflect.TypeOf((*B)(nil)).Elem(), &Options{
 				Type: "C3",
 			})
 			So(err, ShouldBeNil)
 			So(v.(B).Fun(), ShouldEqual, 3)
 		}
 		{
-			v, err := NewType(reflect.TypeOf((*B)(nil)).Elem(), &TypeOptions{
+			v, err := NewType(reflect.TypeOf((*B)(nil)).Elem(), &Options{
 				Type: "C4",
 			})
 			So(err, ShouldBeNil)
@@ -189,7 +189,7 @@ func TestNew(t *testing.T) {
 		}
 
 		{
-			v, err := NewType(reflect.TypeOf((*C1)(nil)), &TypeOptions{
+			v, err := NewType(reflect.TypeOf((*C1)(nil)), &Options{
 				Type: "C4",
 			})
 			So(err, ShouldBeNil)
