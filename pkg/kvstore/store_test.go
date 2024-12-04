@@ -18,12 +18,10 @@ func TestStore(t *testing.T) {
 	"Options": {
 		"Size": 1000000,
 		"KeyMarshaler": {
-			"Namespace": "marshaler",
-			"Type": "JSONMarshaler"
+			"Type": "marshaler.JSONMarshaler"
 		},
 		"ValMarshaler": {
-			"Namespace": "marshaler",
-			"Type": "JSONMarshaler"
+			"Type": "marshaler.JSONMarshaler"
 		}
 	}
 }`
