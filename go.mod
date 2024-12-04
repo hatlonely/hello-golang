@@ -28,8 +28,11 @@ require (
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/gopherjs/gopherjs v1.17.2 // indirect
 	github.com/hazelcast/hazelcast-go-client v1.4.1 // indirect
+	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/jtolds/gls v4.20.0+incompatible // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
+	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
+	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
 	github.com/pegasus-kv/thrift v0.13.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
