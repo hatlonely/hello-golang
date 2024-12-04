@@ -49,6 +49,11 @@ func (f *Freecache) Set(ctx context.Context, key any, value any) error {
 		return errors.Wrap(err, "Marshal failed")
 	}
 
+	if value == nil {
+		f.cache.Set(keyBytes, nil, 0)
+		return nil
+	}
+
 	valBytes, err := f.valMarshaler.Marshal(value)
 	if err != nil {
 		return errors.Wrap(err, "Marshal failed")
@@ -71,6 +76,10 @@ func (f *Freecache) Get(ctx context.Context, key any) (any, error) {
 		}
 
 		return nil, errors.Wrapf(err, "Freecache.Get failed. key: [%v]", key)
+	}
+
+	if valBytes == nil {
+		return nil, nil
 	}
 
 	var val any
