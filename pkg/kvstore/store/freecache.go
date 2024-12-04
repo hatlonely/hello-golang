@@ -59,21 +59,21 @@ func (f *Freecache) Set(key any, value any) error {
 func (f *Freecache) Get(key any) (any, error) {
 	keyBytes, err := f.keyMarshaler.Marshal(key)
 	if err != nil {
-		return nil, errors.Wrap(err, "Marshal failed")
+		return nil, errors.Wrapf(err, "Marshal failed. key: [%v]", key)
 	}
 
 	valBytes, err := f.cache.Get(keyBytes)
 	if err != nil {
 		if err == freecache.ErrNotFound {
-			return nil, kvstore.ErrNotFound
+			return nil, errors.WithMessagef(kvstore.ErrNotFound, "Freecache.Get failed. key: [%v]", key)
 		}
 
-		return nil, errors.Wrap(err, "Get failed")
+		return nil, errors.Wrapf(err, "Freecache.Get failed. key: [%v]", key)
 	}
 
 	var val any
 	if err := f.valMarshaler.Unmarshal(valBytes, &val); err != nil {
-		return nil, errors.Wrap(err, "Unmarshal failed")
+		return nil, errors.Wrapf(err, "Unmarshal failed. key: [%v]", key)
 	}
 
 	return val, nil
