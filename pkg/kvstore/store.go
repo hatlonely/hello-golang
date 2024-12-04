@@ -9,8 +9,8 @@ type Store interface {
 	Get(key any) (any, error)
 }
 
-func NewStore(options refx.TypeOptions) (Store, error) {
-	kvstore, err := refx.New(&options)
+func NewStore(options *refx.TypeOptions) (Store, error) {
+	kvstore, err := refx.New(options)
 	if err != nil {
 		return nil, err
 	}

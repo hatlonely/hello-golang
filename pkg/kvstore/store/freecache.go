@@ -7,6 +7,10 @@ import (
 	"github.com/pkg/errors"
 )
 
+func init() {
+	refx.Register("store", "Freecache", NewFreecache)
+}
+
 type FreecacheOptions struct {
 	Size         int
 	KeyMarshaler refx.TypeOptions
