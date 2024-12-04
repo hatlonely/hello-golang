@@ -64,6 +64,10 @@ func (f *Freecache) Get(key any) (any, error) {
 
 	valBytes, err := f.cache.Get(keyBytes)
 	if err != nil {
+		if err == freecache.ErrNotFound {
+			return nil, kvstore.ErrNotFound
+		}
+
 		return nil, errors.Wrap(err, "Get failed")
 	}
 
