@@ -144,3 +144,78 @@ func TestLoadableStore(t *testing.T) {
 	}
 	fmt.Println(val)
 }
+
+type imap map[int]any
+
+type amap map[any]any
+
+func (m amap) Set(key any, value any) {
+	m[key] = value
+}
+
+func (m amap) Get(key any) any {
+	return m[key]
+}
+
+func (m imap) Set(key int, value any) {
+	m[key] = value
+}
+
+func (m imap) Get(key int) any {
+	return m[key]
+}
+
+type imapStore struct {
+	imap imap
+}
+
+func (s *imapStore) Set(ctx context.Context, key any, value any) error {
+	s.imap[key.(int)] = value
+	return nil
+}
+
+func (s *imapStore) Get(ctx context.Context, key any) (any, error) {
+	return s.imap[key.(int)], nil
+}
+
+func BenchmarkMap(b *testing.B) {
+	m := imap{}
+	for i := 0; i < 1000000; i++ {
+		m[i] = i
+	}
+
+	b.Run("imap", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			_ = m.Get(i)
+		}
+	})
+
+	s := &imapStore{imap: imap{}}
+	for i := 0; i < 1000000; i++ {
+		s.imap[i] = i
+	}
+
+	b.Run("imapStore", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			_, _ = s.Get(context.Background(), i)
+		}
+	})
+
+	a := amap{}
+	for i := 0; i < 1000000; i++ {
+		a[i] = i
+	}
+	a["hello"] = "world"
+
+	b.Run("amap", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			_ = a.Get(i)
+		}
+	})
+
+	b.Run("none", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			// _ = a[i]
+		}
+	})
+}
