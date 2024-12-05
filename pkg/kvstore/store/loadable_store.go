@@ -15,6 +15,8 @@ func init() {
 type LoadableStoreOptions struct {
 	Loader refx.Options
 	Store  refx.Options
+
+	Strategy string // inplace / replace
 }
 
 type LoadableStore struct {
