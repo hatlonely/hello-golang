@@ -16,6 +16,9 @@ func init() {
 
 type FileLoaderOptions struct {
 	Path string
+
+	Format string
+	Sep    string
 }
 
 type FileLoader struct {
