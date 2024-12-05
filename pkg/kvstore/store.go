@@ -6,18 +6,6 @@ import (
 	"github.com/hatlonely/hello-golang/pkg/refx"
 )
 
-// type ReadonlyStore interface {
-// 	Get(ctx context.Context, key any) (any, error)
-// }
-
-// func NewReadonlyStore(options *refx.Options) (ReadonlyStore, error) {
-// 	kvstore, err := refx.New(options)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	return kvstore.(ReadonlyStore), nil
-// }
-
 type Store interface {
 	Set(ctx context.Context, key any, value any) error
 	Get(ctx context.Context, key any) (any, error)
